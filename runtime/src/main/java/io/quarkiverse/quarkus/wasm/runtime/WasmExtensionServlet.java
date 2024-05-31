@@ -2,7 +2,6 @@ package io.quarkiverse.quarkus.wasm.runtime;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 

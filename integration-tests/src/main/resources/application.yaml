@@ -1,0 +1,5 @@
+quarkus:
+  wasm:
+    filter-chain:
+      plugins:
+        - name: count_vowels

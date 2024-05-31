@@ -1,0 +1,9 @@
+name: Wasm
+#description: Do something useful.
+metadata:
+#  keywords:
+#    - wasm
+#  guide: https://quarkiverse.github.io/quarkiverse-docs/wasm/dev/ # To create and publish this guide, see https://github.com/quarkiverse/quarkiverse/wiki#documenting-your-extension
+#  categories:
+#    - "miscellaneous"
+#  status: "preview"

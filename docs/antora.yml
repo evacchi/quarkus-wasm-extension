@@ -1,0 +1,5 @@
+name: quarkus-wasm
+title: Wasm
+version: dev
+nav:
+  - modules/ROOT/nav.adoc

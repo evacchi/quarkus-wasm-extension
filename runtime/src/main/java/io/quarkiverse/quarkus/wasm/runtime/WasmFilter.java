@@ -10,7 +10,7 @@ public class WasmFilter implements AutoCloseable {
     }
 
     public byte[] invoke(byte[] bytes) {
-        return plugin.call("count_vowels", bytes);
+        return plugin.call("request_headers", bytes);
     }
 
     @Override

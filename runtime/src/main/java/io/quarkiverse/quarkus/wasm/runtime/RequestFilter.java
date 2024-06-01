@@ -20,11 +20,9 @@ public class RequestFilter {
 
     @ServerRequestFilter(preMatching = true)
     public void requestFilter(ContainerRequestContext requestContext) throws Exception {
-        var ctx = WasmRequestContext.ofHeaders(requestContext.getHeaders().entrySet());
+        var ctx = WasmRequestContext.ofHeaders(requestContext.getHeaders());
         var resCtx = filterChain.invoke(ctx);
-        for (Map.Entry<String, String> h : resCtx.headers().entrySet()) {
-            requestContext.getHeaders().putSingle(h.getKey(), h.getValue());
-        }
+        requestContext.getHeaders().putAll(resCtx.headers());
     }
 
 }

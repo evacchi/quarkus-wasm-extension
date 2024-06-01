@@ -3,7 +3,6 @@ package io.quarkiverse.quarkus.wasm.runtime;
 import java.util.ArrayList;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
 import org.extism.sdk.Plugin;
@@ -22,15 +21,14 @@ public class FilterChainProvider {
     @Inject
     ObjectMapper mapper;
 
-    @Produces
-    public FilterChain filterChain(FilterChainConfig cfg) throws Exception {
+    public FilterChain createFromConfig(FilterChainConfig cfg) throws Exception {
         WasmSourceResolver wasmSourceResolver = new WasmSourceResolver();
         var plugins = new ArrayList<WasmFilter>();
         for (var plugin : cfg.plugins()) {
             String pluginPath = "/" + plugin.name() + ".wasm";
-            try (var wasmStream = this.getClass().getResourceAsStream(pluginPath)) {
+            try (var wasmStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(pluginPath)) {
                 if (wasmStream == null) {
-                    throw new WasmFilterCreationException("Cannot load plugin " + plugin);
+                    throw new WasmFilterCreationException("Cannot load plugin " + plugin.name());
                 }
                 var wasmSource = wasmSourceResolver.resolve(plugin.name(), wasmStream.readAllBytes());
                 var manifest = new Manifest(wasmSource);

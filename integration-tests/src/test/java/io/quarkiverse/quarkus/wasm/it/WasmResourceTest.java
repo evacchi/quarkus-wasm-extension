@@ -3,19 +3,18 @@ package io.quarkiverse.quarkus.wasm.it;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
-import io.quarkiverse.quarkus.wasm.runtime.FilterChain;
-import io.quarkiverse.quarkus.wasm.runtime.RequestFilter;
-import io.quarkiverse.quarkus.wasm.runtime.sdk.WasmRequestContext;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.container.ContainerRequestContext;
-import jakarta.ws.rs.core.*;
-import org.junit.jupiter.api.Test;
-
-import io.quarkus.test.junit.QuarkusTest;
-
 import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.*;
+
+import org.junit.jupiter.api.Test;
+
+import io.quarkiverse.quarkus.wasm.runtime.RequestFilter;
+import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 public class WasmResourceTest {

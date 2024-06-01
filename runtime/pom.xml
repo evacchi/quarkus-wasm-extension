@@ -28,6 +28,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.microprofile-ext.config-ext</groupId>
+            <artifactId>config-events</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.extism.sdk</groupId>
             <artifactId>extism</artifactId>
             <version>1.0.1</version>

@@ -1,5 +1,12 @@
+configsource:
+  yaml:
+    pollForChanges: true
+    notifyOnChanges: true
+
 quarkus:
   wasm:
     filter-chain:
+      flatplugins:
+        - hello-headers
       plugins:
-        - name: hello-headers
+        - name: hello-headers-2

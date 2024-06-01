@@ -28,14 +28,15 @@ public class FilterChainProvider {
         var plugins = new ArrayList<WasmFilter>();
         for (var plugin : cfg.plugins()) {
             String pluginPath = "/" + plugin.name() + ".wasm";
-            LOG.info(pluginPath);
-            var wasmStream = this.getClass()
-                    .getResourceAsStream(pluginPath);
-            var wasmSource = wasmSourceResolver.resolve(plugin.name(),
-                    wasmStream.readAllBytes());
-            var manifest = new Manifest(wasmSource);
-            var filter = new WasmFilter(new Plugin(manifest, true, null));
-            plugins.add(filter);
+            try (var wasmStream = this.getClass().getResourceAsStream(pluginPath)) {
+                if (wasmStream == null) {
+                    throw new WasmFilterCreationException("Cannot load plugin " + plugin);
+                }
+                var wasmSource = wasmSourceResolver.resolve(plugin.name(), wasmStream.readAllBytes());
+                var manifest = new Manifest(wasmSource);
+                var filter = new WasmFilter(new Plugin(manifest, true, null));
+                plugins.add(filter);
+            }
         }
 
         return new FilterChain(mapper, plugins);

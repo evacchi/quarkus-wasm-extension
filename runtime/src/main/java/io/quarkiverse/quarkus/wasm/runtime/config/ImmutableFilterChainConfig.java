@@ -10,7 +10,7 @@ public class ImmutableFilterChainConfig implements FilterChainConfig {
     public ImmutableFilterChainConfig(MutableFilterChainConfig cfg) {
         var l = new ArrayList<Plugin>();
         for (var plugin : cfg.getPlugins()) {
-            l.add(new Plugin(plugin.getName()));
+            l.add(new Plugin(plugin.getName(), plugin.getType()));
         }
         plugins = l;
     }
@@ -20,7 +20,7 @@ public class ImmutableFilterChainConfig implements FilterChainConfig {
         return Collections.unmodifiableList(plugins);
     }
 
-    static record Plugin(String name) implements FilterChainConfig.Plugin {
+    static record Plugin(String name, String type) implements FilterChainConfig.Plugin {
     }
 
     @Override

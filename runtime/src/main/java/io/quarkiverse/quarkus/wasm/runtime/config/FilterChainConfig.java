@@ -22,5 +22,10 @@ public interface FilterChainConfig {
          * @return name of the plugin.
          */
         String name();
+
+        /**
+         * @return "filesystem" or "resource"
+         */
+        String type();
     }
 }

@@ -7,9 +7,11 @@ import org.extism.sdk.Plugin;
  * The implementation of a WasmFilter.
  */
 public class WasmFilter implements AutoCloseable {
+    private final String name;
     private final Plugin plugin;
 
-    public WasmFilter(Plugin plugin) {
+    public WasmFilter(String name, Plugin plugin) {
+        this.name = name;
         this.plugin = plugin;
     }
 
@@ -24,5 +26,16 @@ public class WasmFilter implements AutoCloseable {
     @Override
     public void close() throws Exception {
         plugin.close();
+    }
+
+    @Override
+    public String toString() {
+        return "WasmFilter{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    public String name() {
+        return name;
     }
 }

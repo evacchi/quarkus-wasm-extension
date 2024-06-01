@@ -1,18 +1,15 @@
 package io.quarkiverse.quarkus.wasm.runtime;
 
-import java.util.ArrayList;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkiverse.quarkus.wasm.runtime.config.FilterChainConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
 import org.extism.sdk.Plugin;
 import org.extism.sdk.manifest.Manifest;
 import org.extism.sdk.wasm.WasmSourceResolver;
 import org.jboss.logging.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.quarkiverse.quarkus.wasm.runtime.config.FilterChainConfig;
+import java.util.ArrayList;
 
 @ApplicationScoped
 public class FilterChainProvider {
@@ -32,7 +29,7 @@ public class FilterChainProvider {
                 }
                 var wasmSource = wasmSourceResolver.resolve(plugin.name(), wasmStream.readAllBytes());
                 var manifest = new Manifest(wasmSource);
-                var filter = new WasmFilter(new Plugin(manifest, true, null));
+                var filter = new WasmFilter(plugin.name(), new Plugin(manifest, true, null));
                 plugins.add(filter);
             }
         }

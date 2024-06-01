@@ -1,21 +1,16 @@
 package io.quarkiverse.quarkus.wasm.runtime;
 
-import java.util.List;
-
+import io.quarkiverse.quarkus.wasm.runtime.config.ConfigChanged;
+import io.quarkiverse.quarkus.wasm.runtime.config.FilterChainConfig;
+import io.quarkiverse.quarkus.wasm.runtime.sdk.WasmRequestContext;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Response;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.server.ServerRequestFilter;
-import org.microprofileext.config.event.ChangeEvent;
-
-import io.quarkiverse.quarkus.wasm.runtime.config.FilterChainConfig;
-import io.quarkiverse.quarkus.wasm.runtime.sdk.WasmRequestContext;
 
 @ApplicationScoped
 public class RequestFilter {
@@ -24,12 +19,8 @@ public class RequestFilter {
     @Inject
     FilterChainProvider filterChainProvider;
 
-    //@ConfigProperty(name = "quarkus.wasm.filter-chain")
     @Inject
     FilterChainConfig cfg;
-
-    @ConfigProperty(name = "quarkus.wasm.filter-chain.flatplugins")
-    List<String> plugins;
 
     FilterChain filterChain;
 
@@ -52,8 +43,10 @@ public class RequestFilter {
         }
     }
 
-    public void onConfigChange(@Observes ChangeEvent evt) {
+    public void onConfigChange(@Observes ConfigChanged evt) throws Exception {
         LOG.info("omg config has changed: " + evt);
+        this.cfg = evt.cfg();
+        this.filterChain = filterChainProvider.createFromConfig(cfg);
     }
 
 }

@@ -9,4 +9,4 @@ quarkus:
       flatplugins:
         - hello-headers
       plugins:
-        - name: hello-headers-2
+        - name: hello-headers

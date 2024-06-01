@@ -1,15 +1,15 @@
 package io.quarkiverse.quarkus.wasm.it;
 
-import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
+import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.http.ContentType;
+
 @QuarkusTest
 public class AdminResourceTest {
-
 
     @Test
     public void testCurrentConfigEndpoint() {
@@ -42,7 +42,6 @@ public class AdminResourceTest {
                 .body("plugins[0].name", equalTo("hello-headers-2"));
 
     }
-
 
     @Test
     public void testE2eUpdateConfigEndpoint() {
@@ -77,7 +76,6 @@ public class AdminResourceTest {
                 .then()
                 .statusCode(200)
                 .body(not("Hello wasm"));
-
 
     }
 

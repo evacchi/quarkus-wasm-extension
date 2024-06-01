@@ -1,12 +1,14 @@
 package io.quarkiverse.quarkus.wasm.runtime;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkiverse.quarkus.wasm.runtime.sdk.WasmRequestContext;
-import io.quarkus.logging.Log;
-import org.extism.sdk.ExtismException;
-
 import java.io.IOException;
 import java.util.Collection;
+
+import org.extism.sdk.ExtismException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.quarkiverse.quarkus.wasm.runtime.sdk.WasmRequestContext;
+import io.quarkus.logging.Log;
 
 public final class FilterChain {
     private final ObjectMapper mapper;

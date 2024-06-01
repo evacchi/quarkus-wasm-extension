@@ -16,12 +16,12 @@
  */
 package io.quarkiverse.quarkus.wasm.it;
 
+import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.HttpHeaders;
-
-import java.util.List;
 
 @Path("/wasm")
 @ApplicationScoped

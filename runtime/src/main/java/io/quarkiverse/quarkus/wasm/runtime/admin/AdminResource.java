@@ -1,15 +1,16 @@
 package io.quarkiverse.quarkus.wasm.runtime.admin;
 
-import io.quarkiverse.quarkus.wasm.runtime.config.*;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import java.util.ArrayList;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 
-import java.util.ArrayList;
-
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import io.quarkiverse.quarkus.wasm.runtime.config.*;
 
 @Path("/wasm/admin")
 @ApplicationScoped
@@ -22,7 +23,6 @@ public class AdminResource {
 
     @Inject
     Event<ConfigChanged> configChangedEvent;
-
 
     @PostConstruct
     public void initConfig() {

@@ -1,4 +1,4 @@
-package io.quarkiverse.quarkus.wasm.runtime;
+package io.quarkiverse.quarkus.wasm.runtime.config;
 
 import java.util.List;
 

@@ -12,13 +12,4 @@ class WasmProcessor {
         return new FeatureBuildItem(FEATURE);
     }
 
-    //    @BuildStep
-    //    ServletBuildItem createServlet() {
-    //        ServletBuildItem servletBuildItem = ServletBuildItem
-    //                .builder("greeting-extension", WasmExtensionServlet.class.getName())
-    //                .addMapping("/greeting")
-    //                .build();
-    //        return servletBuildItem;
-    //    }
-
 }

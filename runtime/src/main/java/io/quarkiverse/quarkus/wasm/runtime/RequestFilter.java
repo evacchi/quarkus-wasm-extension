@@ -1,35 +1,30 @@
 package io.quarkiverse.quarkus.wasm.runtime;
 
+import java.util.Map;
+
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.container.ContainerRequestContext;
 
 import org.jboss.logging.Logger;
+import org.jboss.resteasy.reactive.server.ServerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkiverse.quarkus.wasm.runtime.sdk.WasmRequestContext;
 
-import io.quarkus.vertx.web.RouteFilter;
-import io.vertx.ext.web.RoutingContext;
-
+@ApplicationScoped
 public class RequestFilter {
     private static final Logger LOG = Logger.getLogger(RequestFilter.class);
 
     @Inject
-    ObjectMapper mapper;
-
-    @Inject
     FilterChain filterChain;
 
-    @RouteFilter
-    void requestFilter(RoutingContext rc) throws Exception {
-        var ctx = WasmRequestContext.ofHeaders(rc.request().headers().entries());
-        byte[] bytes = mapper.writeValueAsBytes(ctx);
-
-        for (WasmFilter plugin : filterChain.plugins()) {
-            byte[] res = plugin.invoke(bytes);
-            var resCtx = mapper.readValue(res, WasmRequestContext.class);
-            rc.request().headers().setAll(resCtx.headers());
+    @ServerRequestFilter(preMatching = true)
+    public void requestFilter(ContainerRequestContext requestContext) throws Exception {
+        var ctx = WasmRequestContext.ofHeaders(requestContext.getHeaders().entrySet());
+        var resCtx = filterChain.invoke(ctx);
+        for (Map.Entry<String, String> h : resCtx.headers().entrySet()) {
+            requestContext.getHeaders().putSingle(h.getKey(), h.getValue());
         }
-
-        rc.next();
     }
 
 }

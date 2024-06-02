@@ -19,7 +19,7 @@ public class AdminResourceTest {
                 .when().get("/wasm/admin/config")
                 .then()
                 .statusCode(200)
-                .body("plugins[0].name", equalTo("hello-headers"));
+                .body("plugins[0].name", equalTo("hello-world"));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class AdminResourceTest {
                 .body("""
                             {
                                 "plugins": [
-                                    {"name": "hello-headers-2", "type": "resource"}
+                                    {"name": "fortunes", "type": "resource"}
                                 ]
                             }
                         """)
@@ -41,7 +41,7 @@ public class AdminResourceTest {
                 .when().get("/wasm/admin/config")
                 .then()
                 .statusCode(200)
-                .body("plugins[0].name", equalTo("hello-headers-2"));
+                .body("plugins[0].name", equalTo("fortunes"));
 
     }
 
@@ -59,7 +59,7 @@ public class AdminResourceTest {
                 .body("""
                             {
                                 "plugins": [
-                                    {"name": "hello-headers-2", "type": "resource"}
+                                    {"name": "fortunes", "type": "resource"}
                                 ]
                             }
                         """)
@@ -71,7 +71,7 @@ public class AdminResourceTest {
                 .when().get("/wasm/admin/config")
                 .then()
                 .statusCode(200)
-                .body("plugins[0].name", equalTo("hello-headers-2"));
+                .body("plugins[0].name", equalTo("fortunes"));
 
         given()
                 .when().get("/wasm")

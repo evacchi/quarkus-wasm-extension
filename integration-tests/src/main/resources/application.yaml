@@ -2,5 +2,5 @@ quarkus:
   wasm:
     filter-chain:
       plugins:
-        - name: hello-headers
+        - name: hello-world
           type: resource

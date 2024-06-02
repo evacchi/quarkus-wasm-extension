@@ -15,9 +15,17 @@ public class WasmFilter implements AutoCloseable {
         this.plugin = plugin;
     }
 
-    public byte[] invoke(byte[] bytes) {
+    public byte[] onRequestHeaders(byte[] bytes) {
         try {
             return plugin.call("request_headers", bytes);
+        } catch (ExtismException e) {
+            throw new WasmFilterException(e);
+        }
+    }
+
+    public byte[] onResponseHeaders(byte[] bytes) {
+        try {
+            return plugin.call("response_headers", bytes);
         } catch (ExtismException e) {
             throw new WasmFilterException(e);
         }

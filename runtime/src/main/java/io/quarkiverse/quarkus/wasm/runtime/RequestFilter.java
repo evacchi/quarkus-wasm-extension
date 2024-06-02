@@ -50,17 +50,25 @@ public class RequestFilter {
     }
 
     @ServerRequestFilter(preMatching = true)
-    public void requestFilter(ContainerRequestContext requestContext) {
+    public Response requestFilter(ContainerRequestContext requestContext) {
         this.checkConfig();
         try {
             var ctx = WasmRequestContext.ofHeaders(requestContext.getHeaders());
             var resCtx = filterChain.onRequestHeaders(ctx);
             requestContext.getHeaders().putAll(resCtx.headers());
+            var status = resCtx.status();
+            if (status != null && (status.code() == 500 || status.code() == 403)) {
+                return Response.status(status.code())
+                        .entity(status.message())
+                        .build();
+            } else {
+                return null;
+            }
         } catch (WasmFilterException e) {
-            requestContext.abortWith(
-                    Response.serverError()
-                            .entity("An error occurred while pre-processing the request")
-                            .build());
+            Log.error("An exception was caught", e);
+            return Response.serverError()
+                    .entity("An error occurred while pre-processing the request")
+                    .build();
         }
     }
 

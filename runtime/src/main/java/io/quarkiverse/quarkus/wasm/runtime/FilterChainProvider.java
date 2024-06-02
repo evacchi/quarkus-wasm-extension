@@ -33,6 +33,7 @@ public class FilterChainProvider {
             switch (plugin.type()) {
                 case "filesystem":
                     wasmFilter = loadFromFileSystem(plugin);
+                    break;
                 case "resource":
                 default:
                     wasmFilter = loadFromResource(plugin);
@@ -45,7 +46,9 @@ public class FilterChainProvider {
 
     private WasmFilter loadFromFileSystem(FilterChainConfig.Plugin plugin)
             throws IOException {
-        var manifest = Manifest.fromFilePath(configPath.resolve(plugin.name() + ".wasm"));
+        Path wasmPath = configPath.resolve(plugin.name() + ".wasm");
+        LOG.infof("Loading from file system: %s", wasmPath);
+        var manifest = Manifest.fromFilePath(wasmPath);
         return new WasmFilter(plugin.name(), new Plugin(manifest, new HostFunction[0], null));
     }
 

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public record WasmRequestContext(Map<String, List<String>> headers) {
     public static WasmRequestContext empty() {
         return new WasmRequestContext(Collections.emptyMap());

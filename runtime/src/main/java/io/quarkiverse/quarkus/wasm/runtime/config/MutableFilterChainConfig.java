@@ -2,6 +2,9 @@ package io.quarkiverse.quarkus.wasm.runtime.config;
 
 import java.util.List;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class MutableFilterChainConfig {
     List<Plugin> plugins = List.of();
 

@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Response;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.server.ServerRequestFilter;
 
@@ -30,12 +31,17 @@ public class RequestFilter {
     @Inject
     FilterChainConfig cfg;
 
+    @ConfigProperty(name = "quarkus.wasm.file-watcher.enabled")
+    boolean fileWatcher;
+
     FilterChain filterChain;
 
     @PostConstruct
     public void loadFilterChain() throws Exception {
         this.filterChain = filterChainProvider.createFromConfig(cfg);
-        this.fileSystemWatcher = new FileSystemWatcher();
+        if (fileWatcher) {
+            this.fileSystemWatcher = new FileSystemWatcher();
+        }
     }
 
     @ServerRequestFilter(preMatching = true)
@@ -54,6 +60,9 @@ public class RequestFilter {
     }
 
     private void checkConfig() {
+        if (!fileWatcher) {
+            return;
+        }
         try {
             var updatedConfig = fileSystemWatcher.reloadConfig();
             if (updatedConfig != null) {

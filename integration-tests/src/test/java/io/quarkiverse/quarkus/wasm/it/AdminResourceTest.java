@@ -6,9 +6,11 @@ import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import io.restassured.http.ContentType;
 
 @QuarkusTest
+@TestProfile(TestProfiles.AdminTest.class)
 public class AdminResourceTest {
 
     @Test

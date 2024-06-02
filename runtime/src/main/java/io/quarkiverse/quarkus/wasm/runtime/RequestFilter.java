@@ -31,7 +31,7 @@ public class RequestFilter {
     @Inject
     FilterChainConfig cfg;
 
-    @ConfigProperty(name = "quarkus.wasm.file-watcher.enabled")
+    @ConfigProperty(name = "quarkus.wasm.file-watcher.enabled", defaultValue = "false")
     boolean fileWatcher;
 
     FilterChain filterChain;

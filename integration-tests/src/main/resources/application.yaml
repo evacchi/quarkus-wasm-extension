@@ -3,3 +3,4 @@ quarkus:
     filter-chain:
       plugins:
         - name: hello-headers
+          type: resource

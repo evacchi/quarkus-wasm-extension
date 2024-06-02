@@ -27,7 +27,7 @@ public class AdminResourceTest {
                 .body("""
                             {
                                 "plugins": [
-                                    {"name": "hello-headers-2"}
+                                    {"name": "hello-headers-2", "type": "resource"}
                                 ]
                             }
                         """)
@@ -57,7 +57,7 @@ public class AdminResourceTest {
                 .body("""
                             {
                                 "plugins": [
-                                    {"name": "hello-headers-2"}
+                                    {"name": "hello-headers-2", "type": "resource"}
                                 ]
                             }
                         """)

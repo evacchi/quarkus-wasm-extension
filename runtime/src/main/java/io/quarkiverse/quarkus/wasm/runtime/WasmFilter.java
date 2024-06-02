@@ -1,7 +1,7 @@
 package io.quarkiverse.quarkus.wasm.runtime;
 
-import org.extism.sdk.ExtismException;
-import org.extism.sdk.Plugin;
+import org.extism.chicory.sdk.ExtismException;
+import org.extism.chicory.sdk.Plugin;
 
 /**
  * The implementation of a WasmFilter.

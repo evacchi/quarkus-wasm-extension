@@ -3,7 +3,7 @@ package io.quarkiverse.quarkus.wasm.runtime;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.extism.sdk.ExtismException;
+import org.extism.chicory.sdk.ExtismException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

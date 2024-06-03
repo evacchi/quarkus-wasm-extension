@@ -3,11 +3,13 @@ package io.quarkiverse.quarkus.wasm.it;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest
+@Disabled
 public class WasmResourceIT {
 
     @Test

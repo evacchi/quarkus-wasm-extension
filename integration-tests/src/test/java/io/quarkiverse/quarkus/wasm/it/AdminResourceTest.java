@@ -6,9 +6,11 @@ import static org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import io.restassured.http.ContentType;
 
 @QuarkusTest
+@TestProfile(TestProfiles.AdminTest.class)
 public class AdminResourceTest {
 
     @Test
@@ -17,7 +19,7 @@ public class AdminResourceTest {
                 .when().get("/wasm/admin/config")
                 .then()
                 .statusCode(200)
-                .body("plugins[0].name", equalTo("hello-headers"));
+                .body("plugins[0].name", equalTo("hello-world"));
     }
 
     @Test
@@ -27,7 +29,7 @@ public class AdminResourceTest {
                 .body("""
                             {
                                 "plugins": [
-                                    {"name": "hello-headers-2"}
+                                    {"name": "fortunes", "type": "resource"}
                                 ]
                             }
                         """)
@@ -39,7 +41,7 @@ public class AdminResourceTest {
                 .when().get("/wasm/admin/config")
                 .then()
                 .statusCode(200)
-                .body("plugins[0].name", equalTo("hello-headers-2"));
+                .body("plugins[0].name", equalTo("fortunes"));
 
     }
 
@@ -57,7 +59,7 @@ public class AdminResourceTest {
                 .body("""
                             {
                                 "plugins": [
-                                    {"name": "hello-headers-2"}
+                                    {"name": "fortunes", "type": "resource"}
                                 ]
                             }
                         """)
@@ -69,7 +71,7 @@ public class AdminResourceTest {
                 .when().get("/wasm/admin/config")
                 .then()
                 .statusCode(200)
-                .body("plugins[0].name", equalTo("hello-headers-2"));
+                .body("plugins[0].name", equalTo("fortunes"));
 
         given()
                 .when().get("/wasm")

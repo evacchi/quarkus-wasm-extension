@@ -16,7 +16,7 @@ class WasmProcessor {
 
     @BuildStep
     void registerWasmResources(BuildProducer<NativeImageResourceBuildItem> nativeResources) {
-        // todo
+        nativeResources.produce(new NativeImageResourceBuildItem("extism-runtime.wasm"));
     }
 
 }

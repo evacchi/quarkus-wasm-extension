@@ -1,5 +1,0 @@
-quarkus:
-  wasm:
-    filter-chain:
-      plugins:
-        - name: hello-headers

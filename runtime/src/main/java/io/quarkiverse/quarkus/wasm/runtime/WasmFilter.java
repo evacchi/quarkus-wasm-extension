@@ -1,7 +1,7 @@
 package io.quarkiverse.quarkus.wasm.runtime;
 
-import org.extism.sdk.ExtismException;
-import org.extism.sdk.Plugin;
+import org.extism.chicory.sdk.ExtismException;
+import org.extism.chicory.sdk.Plugin;
 
 /**
  * The implementation of a WasmFilter.
@@ -15,7 +15,7 @@ public class WasmFilter implements AutoCloseable {
         this.plugin = plugin;
     }
 
-    public byte[] invoke(byte[] bytes) {
+    public byte[] onRequestHeaders(byte[] bytes) {
         try {
             return plugin.call("request_headers", bytes);
         } catch (ExtismException e) {
@@ -23,9 +23,17 @@ public class WasmFilter implements AutoCloseable {
         }
     }
 
+    public byte[] onResponseHeaders(byte[] bytes) {
+        try {
+            return plugin.call("response_headers", bytes);
+        } catch (ExtismException e) {
+            throw new WasmFilterException(e);
+        }
+    }
+
     @Override
     public void close() throws Exception {
-        plugin.close();
+        //        plugin.close();
     }
 
     @Override

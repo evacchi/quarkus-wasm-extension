@@ -33,7 +33,7 @@ public class WasmFilter implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        plugin.close();
+        //        plugin.close();
     }
 
     @Override

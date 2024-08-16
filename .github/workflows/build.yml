@@ -52,6 +52,14 @@ jobs:
           java-version: 17
           cache: 'maven'
 
+      - name: Install Chicory SDK Snapshot
+        run: |
+          git clone https://github.com/extism/chicory-sdk
+          cd chicory-sdk
+          mvn -B clean install -Dno-format
+          cd ..
+          rm -rf chicory-sdk
+
       - name: Build with Maven
         run: mvn -B clean install -Dno-format
 

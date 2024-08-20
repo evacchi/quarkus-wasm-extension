@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.quarkiverse</groupId>
         <artifactId>quarkiverse-parent</artifactId>
-        <version>16</version>
+        <version>17</version>
     </parent>
     <groupId>io.quarkiverse.quarkus-wasm</groupId>
     <artifactId>quarkus-wasm-parent</artifactId>

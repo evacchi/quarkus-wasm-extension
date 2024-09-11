@@ -9,10 +9,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import org.extism.chicory.sdk.Manifest;
+import org.extism.chicory.sdk.ManifestWasm;
 import org.extism.chicory.sdk.Plugin;
 import org.jboss.logging.Logger;
 
-import com.dylibso.chicory.runtime.HostFunction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.quarkiverse.quarkus.wasm.runtime.config.FilterChainConfig;
@@ -46,10 +46,11 @@ public class FilterChainProvider {
 
     private WasmFilter loadFromFileSystem(FilterChainConfig.Plugin plugin)
             throws IOException {
-        Path wasmPath = configPath.resolve(plugin.name() + ".wasm");
+        var wasmPath = ManifestWasm.fromFilePath(configPath.resolve(plugin.name() + ".wasm")).build();
         LOG.infof("Loading from file system: %s", wasmPath);
-        var manifest = Manifest.fromFilePath(wasmPath);
-        return new WasmFilter(plugin.name(), new Plugin(manifest, new HostFunction[0], null));
+
+        var wasmPlugin = Plugin.ofManifest(Manifest.ofWasms(wasmPath).build()).build();
+        return new WasmFilter(plugin.name(), wasmPlugin);
     }
 
     private WasmFilter loadFromResource(FilterChainConfig.Plugin plugin)
@@ -61,8 +62,10 @@ public class FilterChainProvider {
             }
             Path tempFile = Files.createTempFile("chicory-temp", plugin.name());
             Files.write(tempFile, wasmStream.readAllBytes());
-            var manifest = Manifest.fromFilePath(tempFile);
-            return new WasmFilter(plugin.name(), new Plugin(manifest, new HostFunction[0], null));
+            var manifest = Manifest.ofWasms(ManifestWasm.fromFilePath(tempFile).build()).build();
+            var wasmPlugin = Plugin.ofManifest(manifest).build();
+
+            return new WasmFilter(plugin.name(), wasmPlugin);
         }
     }
 }
